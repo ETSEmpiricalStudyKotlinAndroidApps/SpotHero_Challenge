@@ -6,11 +6,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.spothero.challenge.data.SpotHeroApi
 import com.spothero.challenge.data.model.Spot
 import com.spothero.challenge.databinding.ActivityMainBinding
-import com.spothero.challenge.viewmodel.MyRecyclerViewAdapter
 import com.spothero.challenge.viewmodel.SpotHeroViewModel
 import com.spothero.challenge.viewmodel.SpotHeroViewModelFactory
 import io.reactivex.SingleObserver
@@ -58,7 +58,15 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         binding.spotsRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MyRecyclerViewAdapter { selectedItem: Spot -> listItemClicked(selectedItem) }
-        binding.spotsRecyclerView.adapter = adapter
+        binding.spotsRecyclerView.adapter = adapter // loading the adapter for our recycler view
+
+        // divider between recycler view rows
+        binding.spotsRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                applicationContext,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         displaySpotsList()
 
     }
@@ -82,7 +90,7 @@ class MainActivity : AppCompatActivity() {
      * another Activity (for showing details about that spot).
      */
     private fun listItemClicked(spot: Spot) {
-        TODO()
+//        TODO()
     }
 
     /**

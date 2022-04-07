@@ -1,13 +1,11 @@
-package com.spothero.challenge.viewmodel
+package com.spothero.challenge
 
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.spothero.challenge.R
 import com.spothero.challenge.data.model.Spot
 import com.spothero.challenge.databinding.ListItemBinding
 

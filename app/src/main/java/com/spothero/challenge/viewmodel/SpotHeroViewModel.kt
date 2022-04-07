@@ -7,7 +7,6 @@ import com.spothero.challenge.Event
 import com.spothero.challenge.data.SpotHeroApi
 import com.spothero.challenge.data.model.Spot
 
-
 /**
  * @author Hojat Ghasemi,
  * 2022-04-06
