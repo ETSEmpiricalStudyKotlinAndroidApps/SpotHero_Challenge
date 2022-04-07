@@ -14,6 +14,7 @@ import com.spothero.challenge.viewmodel.MyRecyclerViewAdapter
 import com.spothero.challenge.viewmodel.SpotHeroViewModel
 import com.spothero.challenge.viewmodel.SpotHeroViewModelFactory
 import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 class MainActivity : AppCompatActivity() {
@@ -71,7 +72,9 @@ class MainActivity : AppCompatActivity() {
     private fun displaySpotsList() {
         // we're in the View layer so all our data-related
         // communications will be with ViewModel.
-        spotViewModel.spots.subscribe(getObserver())
+        spotViewModel.spots
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(getObserver())
     }
 
     /**
