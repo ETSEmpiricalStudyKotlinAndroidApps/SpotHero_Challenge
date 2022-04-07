@@ -1,10 +1,12 @@
 package com.spothero.challenge.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.spothero.challenge.R
 import com.spothero.challenge.data.model.Spot
 import com.spothero.challenge.databinding.ListItemBinding
@@ -64,8 +66,11 @@ class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bindi
      * loading the UI in list).
      */
     fun bind(spot: Spot, clickListener: (Spot) -> Unit) {
-//        binding.imageView.setImageURI(spot.facilityPhoto)
-        Log.d(TAG, spot.facilityPhoto)
+
+        Glide.with(binding.root.context)
+            .load(Uri.parse("file:/${spot.facilityPhoto}"))
+            .into(binding.imageView)
+
         binding.tvAddress.text = spot.address.toString()
         binding.tvDistance.text = spot.distance
         binding.tvPrice.text = spot.price.toString()
