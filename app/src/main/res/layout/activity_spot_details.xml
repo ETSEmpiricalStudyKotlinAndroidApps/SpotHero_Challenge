@@ -24,6 +24,7 @@
             android:id="@+id/facilihty_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:contentDescription="facility picture"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -43,19 +44,31 @@
                 android:id="@+id/tv_address_detail_screen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="street address"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_distance_detail_screen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Distance"
+                android:textSize="16sp"
+                tools:ignore="RtlHardcoded" />
 
             <TextView
                 android:id="@+id/tv_description_detail_screen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="description goes here"
+                android:textSize="16sp"
+                tools:ignore="RtlHardcoded" />
         </LinearLayout>
 
         <Button
