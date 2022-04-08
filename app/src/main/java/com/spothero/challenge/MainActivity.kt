@@ -25,9 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var spotViewModel: SpotHeroViewModel
     private lateinit var adapter: MyRecyclerViewAdapter
-
-    private lateinit var singleObserver: SingleObserver<List<Spot>>
-    private val TAG = "Spot_Hero_Main_Activity"
+    private val TAG = "Main_Activity"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +42,8 @@ class MainActivity : AppCompatActivity() {
         spotViewModel = ViewModelProvider(this, factory).get(SpotHeroViewModel::class.java)
 
         binding.myViewModel = spotViewModel
-        // but that binding exists just as long as this Activity lives (this
-        // is a good way of getting rid of memory leaks).
+        // but this binding exists just as long as this Activity lives
+        // (this is a good way of getting rid of memory leaks).
         binding.lifecycleOwner = this
         initRecyclerView()
 
@@ -103,13 +101,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * The code for making a SingleObserver was taken out to a separate method in order to make everything more concise/modular.
+     * The code for making a SingleObserver was taken out to a separate method in order to make the code more readable.
      */
     private fun getObserver(): SingleObserver<List<Spot>> {
 
         return object : SingleObserver<List<Spot>> {
             override fun onSubscribe(d: Disposable) {
-                Log.d(TAG, "onSubscribe() function was invoked")
+                Log.d(TAG, "SingleObserver<List<Spot>> onSubscribe() function")
             }
 
             @SuppressLint("NotifyDataSetChanged")
@@ -117,14 +115,14 @@ class MainActivity : AppCompatActivity() {
                 // give your list of spots to the adapter.
                 Log.i("TAG_Spots_list", t.toString())
 
-                // incrementally sorting the list of spots according to their
-                // prices and pass it as the list to our adapter.
+                // incrementally sorting the list of spots according to
+                // their prices and pass it as the list to our adapter.
                 adapter.setList(t.sortedBy { it.price })
                 adapter.notifyDataSetChanged()
             }
 
             override fun onError(e: Throwable) {
-                Log.e(TAG, "MainActivity onError() function was invoked")
+                Log.e(TAG, "SingleObserver<List<Spot>> -- ${e.message}")
             }
 
         }
