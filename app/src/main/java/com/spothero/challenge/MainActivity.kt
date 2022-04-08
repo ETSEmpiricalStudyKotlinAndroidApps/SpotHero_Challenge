@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         // All of our interactions with ViewModel will be performed through this "spotViewModel" object.
         spotViewModel = ViewModelProvider(this, factory).get(SpotHeroViewModel::class.java)
 
-        //todo: I'm not really sure if the line below is needed in here.
         binding.myViewModel = spotViewModel
         // but that binding exists just as long as this Activity lives (this
         // is a good way of getting rid of memory leaks).
@@ -90,7 +89,8 @@ class MainActivity : AppCompatActivity() {
      * another Activity (for showing details about that spot).
      */
     private fun listItemClicked(spot: Spot) {
-//        TODO()
+
+
     }
 
     /**

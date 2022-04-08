@@ -15,7 +15,9 @@ import java.text.NumberFormat
  * 2022-04-06
  * https://github.com/hojat72elect
  *
- * These 2 classes will give data to our recycler view.
+ * These 2 classes will give data to our recycler view. Pay attention that the
+ * constructor parameter of MyRecyclerViewAdapter is a lambda function (we'll
+ * use it to define on item selected listener for recycler view).
  */
 class MyRecyclerViewAdapter(
     private val clickListener: (Spot) -> Unit

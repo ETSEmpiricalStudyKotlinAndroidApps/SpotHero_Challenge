@@ -3,15 +3,16 @@ package com.spothero.challenge.data
 import android.content.Context
 import android.util.Log
 import kotlinx.serialization.toUtf8Bytes
-import okhttp3.*
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.Protocol
+import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
-import java.lang.Exception
 
-class MockClient(private val context: Context): Interceptor {
+class MockClient(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val endpoint = chain.request().url.encodedPathSegments.last()
@@ -25,11 +26,11 @@ class MockClient(private val context: Context): Interceptor {
         try {
             response = context.resources.assets.open("$endpoint.json").parseToString()
 
-                responseBuilder.code(200)
+            responseBuilder.code(200)
                 .body(response.toUtf8Bytes().toResponseBody("application/json".toMediaTypeOrNull()))
                 .addHeader("content-type", "application/json")
         } catch (e: Exception) {
-           response = "[]"
+            response = "[]"
 
             responseBuilder.code(400)
                 .body(response.toUtf8Bytes().toResponseBody("application/json".toMediaTypeOrNull()))

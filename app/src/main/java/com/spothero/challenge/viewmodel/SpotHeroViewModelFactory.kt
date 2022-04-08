@@ -12,7 +12,7 @@ import com.spothero.challenge.data.SpotHeroApi
 class SpotHeroViewModelFactory(private val repository: SpotHeroApi) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        
+
         // boilerplate that will be used for all ViewModel factories
         if (modelClass.isAssignableFrom(SpotHeroViewModel::class.java)) {
             return SpotHeroViewModel(repository) as T
