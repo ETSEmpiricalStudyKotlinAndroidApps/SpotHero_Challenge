@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.spothero.challenge.Event
 import com.spothero.challenge.data.SpotHeroApi
 import com.spothero.challenge.data.model.Spot
-import io.reactivex.Single
 
 /**
  * @author Hojat Ghasemi,
@@ -15,9 +14,9 @@ import io.reactivex.Single
  */
 class SpotHeroViewModel(private val repository: SpotHeroApi) : ViewModel() {
 
-    fun getAllSpotsObservable(): Single<List<Spot>> {
-        return repository.getSpotsObservable()
-    }
+    val spots = repository.getSpotsObservable()
+    private lateinit var chosenSpot: Spot
+
 
     // for handling the events that might happen in View layer.
     private val statusMessage = MutableLiveData<Event<String>>()
