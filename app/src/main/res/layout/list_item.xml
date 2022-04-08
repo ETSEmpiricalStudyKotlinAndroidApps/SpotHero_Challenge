@@ -7,6 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -16,6 +19,7 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
+            android:padding="5dp"
             app:cardElevation="10dp">
 
             <RelativeLayout
@@ -49,7 +53,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:layout_weight="1"
                         android:maxLines="1"
                         android:text="address"
                         android:textSize="16sp" />
@@ -59,7 +62,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16sp"
-                        android:layout_weight="1"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="0dp"
                         android:maxLines="1"
                         android:text="distance"
                         android:textSize="16sp" />
@@ -69,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20pt"
-                        android:layout_weight="1"
+                        android:layout_marginTop="0pt"
                         android:maxLines="1"
                         android:text="price"
                         android:textSize="16pt" />

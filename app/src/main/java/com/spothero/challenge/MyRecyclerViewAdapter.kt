@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.spothero.challenge.data.model.Spot
 import com.spothero.challenge.databinding.ListItemBinding
+import java.text.NumberFormat
 
 /**
  * @author Hojat Ghasemi,
@@ -69,9 +70,11 @@ class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bindi
             .load(Uri.parse("file:/${spot.facilityPhoto}"))
             .into(binding.imageView)
 
-        binding.tvAddress.text = spot.address.toString()
+        binding.tvAddress.text = spot.address.street
         binding.tvDistance.text = spot.distance
-        binding.tvPrice.text = spot.price.toString()
+        binding.tvPrice.text = NumberFormat.getCurrencyInstance().format(spot.price / 100)
+
+
         binding.listItemLayout.setOnClickListener {
             clickListener(spot)
         }

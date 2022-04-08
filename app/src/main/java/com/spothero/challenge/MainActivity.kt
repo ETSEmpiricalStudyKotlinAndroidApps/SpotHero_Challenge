@@ -107,7 +107,10 @@ class MainActivity : AppCompatActivity() {
             override fun onSuccess(t: List<Spot>) {
                 // give your list of spots to the adapter.
                 Log.i("TAG_Spots_list", t.toString())
-                adapter.setList(t)
+
+                // incrementally sorting the list of spots according to their
+                // prices and pass it as the list to our adapter.
+                adapter.setList(t.sortedBy { it.price })
                 adapter.notifyDataSetChanged()
             }
 
