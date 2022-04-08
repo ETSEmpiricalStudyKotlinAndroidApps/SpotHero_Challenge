@@ -1,6 +1,7 @@
 package com.spothero.challenge
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,8 @@ import com.spothero.challenge.viewmodel.SpotHeroViewModelFactory
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+
+const val EXTRA_SPOT_ID = "com.spothero.challenge.spotId"
 
 class MainActivity : AppCompatActivity() {
 
@@ -90,7 +93,13 @@ class MainActivity : AppCompatActivity() {
      */
     private fun listItemClicked(spot: Spot) {
 
+        val intent = Intent(this, SpotDetailsActivity::class.java).apply {
 
+            // MainActivity will only send the ID of chosen spot to SpotDetailsActivity;
+            // the receiver Activity is responsible to contact ViewModel and ask for needed data
+            putExtra(EXTRA_SPOT_ID, spot.id)
+        }
+        startActivity(intent)
     }
 
     /**
