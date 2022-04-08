@@ -1,6 +1,7 @@
 package com.spothero.challenge
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -79,17 +80,20 @@ class MainActivity : AppCompatActivity() {
     private fun displaySpotsList() {
         // we're in the View layer so all our data-related
         // communications will be with ViewModel.
-        spotViewModel.spots
+        spotViewModel.getAllSpotsObservable()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(getObserver())
     }
 
     /**
-     * User has chosen one of the spots in the list, get the data and go to
-     * another Activity (for showing details about that spot).
+     * User has chosen one of the spots in the list, get the data and go to SpotDetailsActivity (for showing details about that spot).
      */
     private fun listItemClicked(spot: Spot) {
 
+        val intent = Intent(this, SpotDetailsActivity::class.java).apply {
+
+        }
+        startActivity(intent)
 
     }
 
