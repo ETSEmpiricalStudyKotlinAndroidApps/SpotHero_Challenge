@@ -3,6 +3,7 @@ package com.spothero.challenge.viewmodel
 import androidx.lifecycle.ViewModel
 import com.spothero.challenge.data.SpotHeroApi
 import com.spothero.challenge.data.model.Spot
+import io.reactivex.Single
 
 /**
  * @author Hojat Ghasemi,
@@ -11,8 +12,13 @@ import com.spothero.challenge.data.model.Spot
  */
 class SpotHeroViewModel(private val repository: SpotHeroApi) : ViewModel() {
 
-    val spots = repository.getSpotsObservable()
-    private lateinit var chosenSpot: Spot
 
+    fun getAllSpots(): Single<List<Spot>> {
+        return repository.getSpotsObservable()
+    }
+
+    fun getSpotById(spotId: Int): Single<Spot> {
+        return repository.getSpotByIdObservable(spotId)
+    }
 
 }
