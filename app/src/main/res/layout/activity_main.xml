@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <!--this tag connects the Bindable properties of
-        SpotHeroViewModel class to this UI layout.-->
+        <!--This helps us to create a binding for controlling this UI
+         easier. Don't forget to define one specific lifecycleOwner for
+          this binding; otherwise you might face memory leaks.
+        .-->
         <variable
             name="myViewModel"
             type="com.spothero.challenge.viewmodel.SpotHeroViewModel" />
