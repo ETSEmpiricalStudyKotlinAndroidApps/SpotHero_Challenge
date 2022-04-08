@@ -1,5 +1,6 @@
 package com.spothero.challenge
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import com.spothero.challenge.viewmodel.SpotHeroViewModelFactory
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import java.text.NumberFormat
 
 class SpotDetailsActivity : AppCompatActivity() {
 
@@ -62,12 +64,15 @@ class SpotDetailsActivity : AppCompatActivity() {
                 Log.d(TAG, "SingleObserver<Spot> onSubscribe() function")
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onSuccess(t: Spot) {
                 // load the UI with your Spot info
                 Glide.with(this@SpotDetailsActivity)
                     .load(Uri.parse("file:/${t.facilityPhoto}"))
                     .into(binding.facilihtyPhoto)
-                binding.buttonBook.text = t.price.toString()
+                binding.buttonBook.text =
+                    "Book For ${NumberFormat.getCurrencyInstance().format(t.price / 100.0)}"
+
                 binding.tvAddressDetailScreen.text = t.address.street
                 binding.tvDistanceDetailScreen.text = t.distance
                 binding.tvDescriptionDetailScreen.text = t.description

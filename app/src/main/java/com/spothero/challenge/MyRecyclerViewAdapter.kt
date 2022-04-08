@@ -74,7 +74,7 @@ class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bindi
 
         binding.tvAddress.text = spot.address.street
         binding.tvDistance.text = spot.distance
-        binding.tvPrice.text = NumberFormat.getCurrencyInstance().format(spot.price / 100)
+        binding.tvPrice.text = NumberFormat.getCurrencyInstance().format(spot.price / 100.0)
 
 
         binding.listItemLayout.setOnClickListener {
