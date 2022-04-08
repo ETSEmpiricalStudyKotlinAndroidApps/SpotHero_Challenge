@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     private fun displaySpotsList() {
         // we're in the View layer so all our data-related
         // communications will be with ViewModel.
-        spotViewModel.getAllSpots()
+        spotViewModel.spots
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(getObserver())
     }
