@@ -4,7 +4,7 @@ The SpotHero Android team is excited to move you forward in the interview proces
 
 ## Table of Contents
 
-1. 
+1. [Overview](#overview)
 2. [Requirements](#requirements)
 3. [API Documentation](#api-documentation)
 4. [Tickets](#tickets)
