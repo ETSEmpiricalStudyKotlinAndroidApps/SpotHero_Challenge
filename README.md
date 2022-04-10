@@ -36,3 +36,5 @@ This code challenge includes a mock API name 'SpotHeroApi' implemention using lo
 1. [SH-1: As a Customer, I would like to see a list of Spots when the app launches.](/docs/ticket-sh1)
 2. [SH-2: As a Customer, I would like to view Spot Details when I click on a Spot.](/docs/ticket-sh2)
 3. [SH-3: As a Product Manager, I would like to know the level of effort required to complete the ticket SH-4.](/docs/ticket-sh3)
+
+And my full answer to this coding challenge is in [README_Hojat](README_Hojat)
