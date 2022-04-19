@@ -3,7 +3,11 @@ package com.spothero.challenge
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
@@ -46,7 +51,17 @@ class MainActivity : AppCompatActivity() {
         // but this binding exists just as long as this Activity lives
         // (this is a good way of getting rid of memory leaks).
         binding.lifecycleOwner = this
-        initRecyclerView()
+
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            //Do something after 2 seconds
+            binding.spotsRecyclerView.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.GONE
+
+            initRecyclerView()
+
+        }, 2000)
+
 
     }
 
@@ -57,7 +72,8 @@ class MainActivity : AppCompatActivity() {
      * Pay attention that the function "displaySpotsList()" is only called via "initRecyclerView()" function.
      */
     private fun initRecyclerView() {
-        binding.spotsRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.spotsRecyclerView.layoutManager =
+            LinearLayoutManager(this) // responsible for measuring, positioning and recycling item views.
         adapter = MyRecyclerViewAdapter { selectedItem: Spot -> listItemClicked(selectedItem) }
         binding.spotsRecyclerView.adapter = adapter // loading the adapter for our recycler view
 
@@ -102,6 +118,8 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onError(e: Throwable) {
                     Log.e(TAG, "SingleObserver<List<Spot>> -- ${e.message}")
+                    Toast.makeText(this@MainActivity, "something went wrong!\ntry again later", Toast.LENGTH_SHORT).show()
+
                 }
 
             })

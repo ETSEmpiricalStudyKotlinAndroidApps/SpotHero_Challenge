@@ -76,6 +76,10 @@ class SpotDetailsActivity : AppCompatActivity() {
                     Log.e(TAG, "SingleObserver<Spot> -- ${e.message}")
                 }
             })
+
+        binding.buttonBook.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onDestroy() {
