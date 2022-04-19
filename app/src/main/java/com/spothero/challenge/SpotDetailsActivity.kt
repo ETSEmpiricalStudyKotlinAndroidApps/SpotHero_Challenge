@@ -15,6 +15,7 @@ import com.spothero.challenge.viewmodel.SpotHeroViewModel
 import com.spothero.challenge.viewmodel.SpotHeroViewModelFactory
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.text.NumberFormat
 
@@ -23,6 +24,7 @@ class SpotDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySpotDetailsBinding
     private lateinit var spotViewModel: SpotHeroViewModel
     private val TAG = "Details_Activity"
+    private var compositeDisposable = CompositeDisposable()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,41 +50,38 @@ class SpotDetailsActivity : AppCompatActivity() {
 
         // Get the Single<Spot> from ViewModel
         spotViewModel.getSpotById(chosenSpotId)
-            .observeOn(AndroidSchedulers.mainThread())// we need to have this data on main thread (for loading to UI)
-            .subscribe(getObserver())
+            // we need to have this data on main thread (for loading to UI)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : SingleObserver<Spot> {
+                override fun onSubscribe(d: Disposable) {
+                    Log.d(TAG, "SingleObserver<Spot> onSubscribe() function")
+                    compositeDisposable.add(d)
+                }
 
+                @SuppressLint("SetTextI18n")
+                override fun onSuccess(t: Spot) {
+                    // load the UI with your Spot info
+                    Glide.with(this@SpotDetailsActivity)
+                        .load(Uri.parse("file:/${t.facilityPhoto}"))
+                        .into(binding.facilihtyPhoto)
+                    binding.buttonBook.text =
+                        "Book For ${NumberFormat.getCurrencyInstance().format(t.price / 100.0)}"
 
+                    binding.tvAddressDetailScreen.text = t.address.street
+                    binding.tvDistanceDetailScreen.text = t.distance
+                    binding.tvDescriptionDetailScreen.text = t.description
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "SingleObserver<Spot> -- ${e.message}")
+                }
+            })
     }
 
-    /**
-     * we have an observer pattern between the observable Spot we get
-     * from ViewModel and the observer that we define in here.
-     */
-    private fun getObserver(): SingleObserver<Spot> {
-        return object : SingleObserver<Spot> {
-            override fun onSubscribe(d: Disposable) {
-                Log.d(TAG, "SingleObserver<Spot> onSubscribe() function")
-            }
-
-            @SuppressLint("SetTextI18n")
-            override fun onSuccess(t: Spot) {
-                // load the UI with your Spot info
-                Glide.with(this@SpotDetailsActivity)
-                    .load(Uri.parse("file:/${t.facilityPhoto}"))
-                    .into(binding.facilihtyPhoto)
-                binding.buttonBook.text =
-                    "Book For ${NumberFormat.getCurrencyInstance().format(t.price / 100.0)}"
-
-                binding.tvAddressDetailScreen.text = t.address.street
-                binding.tvDistanceDetailScreen.text = t.distance
-                binding.tvDescriptionDetailScreen.text = t.description
-
-            }
-
-            override fun onError(e: Throwable) {
-                Log.e(TAG, "SingleObserver<Spot> -- ${e.message}")
-            }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
         }
     }
 }

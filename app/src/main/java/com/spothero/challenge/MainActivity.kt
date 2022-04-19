@@ -16,6 +16,7 @@ import com.spothero.challenge.viewmodel.SpotHeroViewModel
 import com.spothero.challenge.viewmodel.SpotHeroViewModelFactory
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 const val EXTRA_SPOT_ID = "com.spothero.challenge.spotId"
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spotViewModel: SpotHeroViewModel
     private lateinit var adapter: MyRecyclerViewAdapter
     private val TAG = "Main_Activity"
-
+    private var compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +83,28 @@ class MainActivity : AppCompatActivity() {
         // communications will be with ViewModel.
         spotViewModel.getAllSpots()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(getObserver())
+            .subscribe(object : SingleObserver<List<Spot>> {
+                override fun onSubscribe(d: Disposable) {
+                    Log.d(TAG, "SingleObserver<List<Spot>> onSubscribe() function")
+                    compositeDisposable.add(d)
+                }
+
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onSuccess(t: List<Spot>) {
+                    // give your list of spots to the adapter.
+                    Log.i("TAG_Spots_list", t.toString())
+
+                    // incrementally sorting the list of spots according to
+                    // their prices and pass it as the list to our adapter.
+                    adapter.setList(t.sortedBy { it.price })
+                    adapter.notifyDataSetChanged()
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "SingleObserver<List<Spot>> -- ${e.message}")
+                }
+
+            })
     }
 
     /**
@@ -100,33 +122,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    /**
-     * The code for making a SingleObserver was taken out to a separate method in order to make the code more readable.
-     */
-    private fun getObserver(): SingleObserver<List<Spot>> {
-
-        return object : SingleObserver<List<Spot>> {
-            override fun onSubscribe(d: Disposable) {
-                Log.d(TAG, "SingleObserver<List<Spot>> onSubscribe() function")
-            }
-
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onSuccess(t: List<Spot>) {
-                // give your list of spots to the adapter.
-                Log.i("TAG_Spots_list", t.toString())
-
-                // incrementally sorting the list of spots according to
-                // their prices and pass it as the list to our adapter.
-                adapter.setList(t.sortedBy { it.price })
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onError(e: Throwable) {
-                Log.e(TAG, "SingleObserver<List<Spot>> -- ${e.message}")
-            }
-
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.dispose()
         }
 
     }
-
 }
